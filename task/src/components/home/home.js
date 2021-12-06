@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./style.css";
 import { RiPencilFill } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { taskss, deletee } from "../../reducers/task";
 
 const Home = () => {
   const [allTasks, setAllTasks] = useState([]);
@@ -13,8 +14,7 @@ const Home = () => {
   const state = useSelector((state) => {
     return state;
   });
-
-  console.log(state.signIn.userID);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getAllTask();
@@ -23,7 +23,6 @@ const Home = () => {
   const getAllTask = async () => {
     // let tokenn = localStorage.getItem("token");
     // let userID = localStorage.getItem("userID");
-
     // setToken(tokenn);
     const tasks = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/task/`,
@@ -34,9 +33,16 @@ const Home = () => {
         },
       }
     );
+
+    const data = {
+      allTasks: tasks.data,
+    };
+    // console.log(data);
+    dispatch(taskss(data));
+
     setAllTasks(tasks.data);
   };
-
+  // console.log(state.taskss.allTasks);
   const deleteTask = async (taskId) => {
     await axios.put(
       `${process.env.REACT_APP_BASE_URL}/task/delete`,
@@ -47,7 +53,12 @@ const Home = () => {
         },
       }
     );
-    getAllTask();
+    const data = {
+      // allTasks: [],
+      taskId,
+    };
+    dispatch(deletee(data));
+    // getAllTask();
   };
 
   const addTask = async () => {
@@ -88,11 +99,11 @@ const Home = () => {
       />
       <button onClick={addTask}> add </button>
 
-      {!allTasks.length ? (
+      {!state.taskss.allTasks.length ? (
         <h2> you dont have any tasks</h2>
       ) : (
         <div className="anim">
-          {allTasks.map((ele) => {
+          {state.taskss.allTasks.map((ele) => {
             return (
               <div key={ele._id}>
                 <h3> {ele.name} </h3>
