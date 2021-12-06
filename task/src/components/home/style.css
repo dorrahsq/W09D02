@@ -1,0 +1,13 @@
+.home {
+  margin: 100px;
+  text-align: center;
+}
+
+.home input {
+  border-radius: 3px;
+  margin: 5px;
+}
+
+.home h3 {
+  display: inline;
+}
