@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { taskss, deletee } from "../../reducers/task";
 
 const Home = () => {
-  const [allTasks, setAllTasks] = useState([]);
+  // const [allTasks, setAllTasks] = useState([]);
   // const [token, setToken] = useState("");
   const [newTask, setNewTask] = useState("");
   const [updatedTask, setUpdatedTask] = useState("");
@@ -21,9 +21,6 @@ const Home = () => {
   }, []);
 
   const getAllTask = async () => {
-    // let tokenn = localStorage.getItem("token");
-    // let userID = localStorage.getItem("userID");
-    // setToken(tokenn);
     const tasks = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/task/`,
       { reqUserId: state.signIn.userID },
@@ -37,12 +34,9 @@ const Home = () => {
     const data = {
       allTasks: tasks.data,
     };
-    // console.log(data);
-    dispatch(taskss(data));
 
-    setAllTasks(tasks.data);
+    dispatch(taskss(data));
   };
-  // console.log(state.taskss.allTasks);
   const deleteTask = async (taskId) => {
     await axios.put(
       `${process.env.REACT_APP_BASE_URL}/task/delete`,
@@ -54,17 +48,15 @@ const Home = () => {
       }
     );
     const data = {
-      // allTasks: [],
       taskId,
     };
     dispatch(deletee(data));
-    // getAllTask();
   };
 
   const addTask = async () => {
-    await axios.post(
+    const NewTask = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/task/create`,
-      { user: localStorage.getItem("userID"), name: newTask },
+      { user: state.signIn.userID, name: newTask },
       {
         headers: {
           Authorization: `Bearer ${state.signIn.token}`,

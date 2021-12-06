@@ -27,41 +27,45 @@ const Header = () => {
   return (
     <>
       <div className="nav">
-        {state.signIn.role == "61a4e135a6502019b9898c1e" ? (
-          <ul>
-            <li className="lie">
-              <Link className="link" to="/usres">
-                users
-              </Link>
-            </li>
-            <li className="lie" id="homeNav">
-              <Link className="link" to="/home">
-                Tasks
-              </Link>
-            </li>
+        {state.signIn.token.length !== 0 ? (
+          state.signIn.role == "61a4e135a6502019b9898c1e" ? (
+            <ul>
+              <li className="lie">
+                <Link className="link" to="/usres">
+                  users
+                </Link>
+              </li>
+              <li className="lie" id="homeNav">
+                <Link className="link" to="/home">
+                  Tasks
+                </Link>
+              </li>
 
-            <li id="logOut">
-              <p className="link" onClick={logout}>
-                {" "}
-                <AiOutlineLogout />
-              </p>
-            </li>
-          </ul>
+              <li id="logOut">
+                <p className="link" onClick={logout}>
+                  {" "}
+                  <AiOutlineLogout />
+                </p>
+              </li>
+            </ul>
+          ) : (
+            <ul>
+              <li className="lie" id="homeNav">
+                <Link className="link" to="/home">
+                  Tasks
+                </Link>
+              </li>
+
+              <li id="logOut">
+                <p className="link" onClick={logout}>
+                  {" "}
+                  <AiOutlineLogout />
+                </p>
+              </li>
+            </ul>
+          )
         ) : (
-          <ul>
-            <li className="lie" id="homeNav">
-              <Link className="link" to="/home">
-                Tasks
-              </Link>
-            </li>
-
-            <li id="logOut">
-              <p className="link" onClick={logout}>
-                {" "}
-                <AiOutlineLogout />
-              </p>
-            </li>
-          </ul>
+          console.log("ggg")
         )}
       </div>
     </>

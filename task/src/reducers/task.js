@@ -16,12 +16,6 @@ const getTasks = (state = initialState, action) => {
         allTasks: state.allTasks.filter((item) => item._id !== taskId),
       };
 
-    case "UPDATE":
-      return state; //
-
-    case "CREATE":
-      return state; //
-
     default:
       return state;
   }
